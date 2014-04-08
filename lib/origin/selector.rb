@@ -17,6 +17,7 @@ module Origin
     # @since 1.0.0
     def merge!(other)
       other.each_pair do |key, value|
+        value = yield( key, self[key.to_s], value ) if block_given? and self[key.to_s]
         if value.is_a?(Hash) && self[key.to_s].is_a?(Hash)
           value = self[key.to_s].merge(value)
         end
